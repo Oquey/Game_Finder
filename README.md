@@ -42,6 +42,7 @@ Game Finder is a Discord bot designed to help gamers discover their next favorit
    ```env
    CLIENT_TOKEN=your_discord_bot_token
    CLIENT_ID=your_discord_client_id
+   GUILD_ID=your_guild_id
    STEAM_API_KEY=your_steam_api_key
    GEMINI_API_KEY=your_gemini_api_key
    ```
