@@ -10,6 +10,12 @@ module.exports = {
                 .setDescription('The command to reload.')
                 .setRequired(true)),
     async execute(interaction) {
+
+        if (interaction.user.id !== process.env.ADMIN_USER_ID) {
+            await interaction.reply({ content: 'You are not authorized to use this command.', ephemeral: true });
+            return;
+        }
+
         const commandName = interaction.options.getString('command');
         const command = interaction.client.commands.get(commandName);
         if (!command) return interaction.reply(`Command ${commandName} not found.`);

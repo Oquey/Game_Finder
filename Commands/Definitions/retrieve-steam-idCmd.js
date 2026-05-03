@@ -18,7 +18,9 @@ module.exports = {
         } else {
             customurl = url.split('/')[4];
         }
-        const response = await fetch(`https://api.steampowered.com/ISteamUser/ResolveVanityURL/v0001/?key=${process.env.STEAM_API_KEY}&vanityurl=${customurl}`).then((res) => res.json());
+        if (!customurl) return interaction.reply('Invalid URL.');
+
+        const response = await fetch(`https://api.steampowered.com/ISteamUser/ResolveVanityURL/v0001/?key=${process.env.STEAM_API_KEY}&vanityurl=${encodeURIComponent(customurl)}`).then((res) => res.json());
         const steamID = response.response.steamid;
 
         if (!steamID) return interaction.reply('Invalid URL.');

@@ -16,7 +16,7 @@ module.exports = {
 
     async execute(interaction) {
         const steamID = interaction.options.getString('steam-id');
-        const response = await fetch(`https://api.steampowered.com/IPlayerService/GetRecentlyPlayedGames/v0001/?key=${process.env.STEAM_API_KEY}&steamid=${steamID}`).then((res) => res.json());
+        const response = await fetch(`https://api.steampowered.com/IPlayerService/GetRecentlyPlayedGames/v0001/?key=${process.env.STEAM_API_KEY}&steamid=${encodeURIComponent(steamID)}`).then((res) => res.json());
         const games = response.response.games;
 
         if (games.length == 0) return interaction.reply('No games found.');
@@ -109,7 +109,7 @@ async function findNewGame(games, ownedGames) {
 
 async function retrieveOwnedGames(steamID) {
 
-    const response = await fetch(`https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=${process.env.STEAM_API_KEY}&steamid=${steamID}&include_appinfo=true`).then((res) => res.json());
+    const response = await fetch(`https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=${process.env.STEAM_API_KEY}&steamid=${encodeURIComponent(steamID)}&include_appinfo=true`).then((res) => res.json());
     const games = response.response.games;
     let ownedGames = "";
     games.forEach(game => {
