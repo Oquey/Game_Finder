@@ -88,7 +88,13 @@ function orderGames(games) {
 
 async function findNewGame(games, ownedGames) {
 
-    const prompt = `Given the following list of games, recommend 3-5 games similar to the user's latest played games. Don't recommend any games that are in owned games.
+    const prompt = `Given the following list of games, recommend 3-5 games similar to the user's latest played games. 
+    Don't recommend any games that are in owned games.
+    The recommended game must not be a sequel or prequel to any owned games.
+    Only recommend games on Steam.
+    Only give the game name and a 3 to 5 word description of why it's recommended.
+    The output must not exceed 1200 characters.
+    Output format: [Game Name] - [3 to 5 word description]
     
     Games I want similar games to:
     ${games}
@@ -96,8 +102,6 @@ async function findNewGame(games, ownedGames) {
     Owned Games:
     ${ownedGames}
     
-    Output format:
-    [Game Name]
     `;
 
     const result = await genAI.models.generateContent({
