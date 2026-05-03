@@ -1,7 +1,7 @@
 {
     "name": "game_finder",
     "version": "0.0.1",
-    "description": "A Discord bot that helps users find games to play together.",
+    "description": "A Discord bot that helps users find new games to play based on their Steam account.",
     "main": "index.js",
     "scripts": {
         "start": "node index.js"

@@ -5,6 +5,7 @@ const genAI = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
 module.exports = {
 
+    cooldown: 30,
     data: new SlashCommandBuilder()
         .setName('recommend-new-game')
         .setDescription('Recommends a new game based on the user\'s latest played games.')
