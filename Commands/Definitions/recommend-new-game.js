@@ -6,8 +6,8 @@ const genAI = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 module.exports = {
 
     data: new SlashCommandBuilder()
-        .setName('retrieve-latest-steam-games')
-        .setDescription('Retrieves the latest played games from a given Steam ID.')
+        .setName('recommend-new-game')
+        .setDescription('Recommends a new game based on the user\'s latest played games.')
         .addStringOption(option =>
             option.setName('steam-id')
                 .setDescription('The Steam ID to retrieve the latest played games for.')

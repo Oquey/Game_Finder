@@ -1,5 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js');
 
+// Hot swap commands without re-running the bot.
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('reload')
