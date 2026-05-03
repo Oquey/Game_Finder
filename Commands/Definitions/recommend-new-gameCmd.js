@@ -16,10 +16,12 @@ module.exports = {
 
     async execute(interaction) {
         const steamID = interaction.options.getString('steam-id');
-        const response = await fetch(`https://api.steampowered.com/IPlayerService/GetRecentlyPlayedGames/v0001/?key=${process.env.STEAM_API_KEY}&steamid=${encodeURIComponent(steamID)}`).then((res) => res.json());
+        const response = await fetch(`https://api.steampowered.com/IPlayerService/GetRecentlyPlayedGames/v0001/?key=${process.env.STEAM_API_KEY}&steamid=${encodeURIComponent(steamID)}`)
+            .then((res) => res.json())
+            .catch(() => { return { "response": { "games": [] } }; });
         const games = response.response.games;
 
-        if (games.length == 0) return interaction.reply('No games found.');
+        if (!games || games.length == 0) return interaction.reply('No games found.');
         let gamenames = "";
         let gamectr = 1;
         let orderedGames = orderGames(games);
@@ -99,7 +101,7 @@ async function findNewGame(games, ownedGames) {
     `;
 
     const result = await genAI.models.generateContent({
-        model: "gemini-2.5-flash",
+        model: "gemini-2.5-flash-lite",
         contents: prompt,
     });
 
@@ -109,9 +111,12 @@ async function findNewGame(games, ownedGames) {
 
 async function retrieveOwnedGames(steamID) {
 
-    const response = await fetch(`https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=${process.env.STEAM_API_KEY}&steamid=${encodeURIComponent(steamID)}&include_appinfo=true`).then((res) => res.json());
+    const response = await fetch(`https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=${process.env.STEAM_API_KEY}&steamid=${encodeURIComponent(steamID)}&include_appinfo=true`)
+        .then((res) => res.json())
+        .catch(() => { return { "response": { "games": [] } }; });
     const games = response.response.games;
     let ownedGames = "";
+    if (!games) return "Error retrieving owned games. Please try again later.";
     games.forEach(game => {
         ownedGames += String(game.name) + "\n";
     });
