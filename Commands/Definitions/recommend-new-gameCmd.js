@@ -30,9 +30,11 @@ module.exports = {
 
         await interaction.deferReply();
 
-        const findNewGameResult = await findNewGame(gamenames);
+        const ownedGames = await retrieveOwnedGames(steamID);
 
-        await interaction.editReply({ content: gamenames + "\n\n" + "Suggested Game: " + findNewGameResult });
+        const findNewGameResult = await findNewGame(gamenames, ownedGames);
+
+        await interaction.editReply({ content: "Your latest games ranked by time played:\n" + gamenames + "\n\n" + "Suggested Games:\n" + findNewGameResult });
 
     }
 
@@ -82,15 +84,18 @@ function orderGames(games) {
 
 }
 
-async function findNewGame(games) {
+async function findNewGame(games, ownedGames) {
 
-    const prompt = `Given the following list of games, recommend a similar game related to the user's latest played games.
+    const prompt = `Given the following list of games, recommend 3-5 games similar to the user's latest played games. Don't recommend any games that are in owned games.
     
-    Games:
+    Games I want similar games to:
     ${games}
     
+    Owned Games:
+    ${ownedGames}
+    
     Output format:
-    Game: [Game Name]
+    [Game Name]
     `;
 
     const result = await genAI.models.generateContent({
@@ -99,5 +104,18 @@ async function findNewGame(games) {
     });
 
     return result.candidates.at(0).content.parts[0].text;
+
+}
+
+async function retrieveOwnedGames(steamID) {
+
+    const response = await fetch(`https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=${process.env.STEAM_API_KEY}&steamid=${steamID}&include_appinfo=true`).then((res) => res.json());
+    const games = response.response.games;
+    let ownedGames = "";
+    games.forEach(game => {
+        ownedGames += String(game.name) + "\n";
+    });
+
+    return ownedGames;
 
 }
