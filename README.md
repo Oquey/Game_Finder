@@ -68,6 +68,12 @@ Game Finder is a Discord bot designed to help gamers discover their next favorit
 - `Events/`: Event handlers for bot status and interactions.
 - `package.json`: Project metadata, scripts, and dependencies.
 
+## ⚖️ Legal
+
+By using this bot, you agree to our:
+- [Terms of Service](TERMS_OF_SERVICE.md)
+- [Privacy Policy](PRIVACY_POLICY.md)
+
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
