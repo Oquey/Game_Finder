@@ -27,6 +27,8 @@ Game Finder is a Discord bot designed to help gamers discover their next favorit
 - A Google Gemini API Key (from [Google AI Studio](https://aistudio.google.com/))
 
 ### Installation
+> [!WARNING]
+> This bot is currently still in development. Upon release, this section will be updated for other servers/users to use.
 
 1. **Clone the repository**:
    ```bash
